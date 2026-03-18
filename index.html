@@ -1,81 +1,364 @@
 <!DOCTYPE html>
-<html lang="ar">
+
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tap Tech - أفضل اختصارات وأدوات يومية للآيفون">
 <title>Tap Tech</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: linear-gradient(180deg, #000000, #0b3d91);
-  color: white;
-  text-align: center;
-}
+  :root {
+    --primary: #00d4ff;
+    --primary-glow: rgba(0, 212, 255, 0.25);
+    --bg-dark: #050a18;
+    --bg-card: rgba(255, 255, 255, 0.06);
+    --bg-card-hover: rgba(255, 255, 255, 0.12);
+    --text: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.55);
+  }
 
-.container {
-  padding: 40px 20px;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-.logo {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 3px solid #00d4ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  font-size: 40px;
-  box-shadow: 0 0 20px #00d4ff;
-}
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-h1 {
-  margin-top: 15px;
-}
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(99, 50, 255, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(0, 100, 200, 0.04) 0%, transparent 70%);
+    animation: bgShift 20s ease-in-out infinite alternate;
+    z-index: 0;
+    pointer-events: none;
+  }
 
-p {
-  opacity: 0.8;
-}
+  @keyframes bgShift {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-5%, -3%) rotate(3deg); }
+  }
 
-.btn {
-  display: block;
-  margin: 12px;
-  padding: 15px;
-  border-radius: 15px;
-  background: rgba(255,255,255,0.1);
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
-}
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 50px 24px 60px;
+  }
+
+  /* Logo */
+  .logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+    animation: fadeDown 0.8s ease-out;
+  }
+
+  .logo {
+    width: 110px;
+    height: 110px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(99, 50, 255, 0.1));
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--primary);
+    position: relative;
+    backdrop-filter: blur(20px);
+    letter-spacing: -2px;
+  }
+
+  .logo::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 34px;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+  }
+
+  .logo span {
+    background: linear-gradient(135deg, var(--primary), #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Title */
+  .title {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.8s ease-out 0.1s both;
+  }
+
+  .title h1 {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ffffff 30%, var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .title p {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Links grid */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .link-card:nth-child(1) { animation-delay: 0.15s; }
+  .link-card:nth-child(2) { animation-delay: 0.22s; }
+  .link-card:nth-child(3) { animation-delay: 0.29s; }
+  .link-card:nth-child(4) { animation-delay: 0.36s; }
+  .link-card:nth-child(5) { animation-delay: 0.43s; }
+  .link-card:nth-child(6) { animation-delay: 0.50s; }
+
+  .link-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(0, 212, 255, 0.04));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .link-card:hover, .link-card:active {
+    background: var(--bg-card-hover);
+    border-color: rgba(0, 212, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 212, 255, 0.08);
+  }
+
+  .link-card:hover::before {
+    opacity: 1;
+  }
+
+  .link-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .link-card:nth-child(1) .link-icon { background: rgba(0, 212, 255, 0.12); }
+  .link-card:nth-child(2) .link-icon { background: rgba(255, 149, 0, 0.12); }
+  .link-card:nth-child(3) .link-icon { background: rgba(52, 199, 89, 0.12); }
+  .link-card:nth-child(4) .link-icon { background: rgba(175, 82, 222, 0.12); }
+  .link-card:nth-child(5) .link-icon { background: rgba(255, 69, 58, 0.12); }
+  .link-card:nth-child(6) .link-icon { background: rgba(255, 55, 95, 0.12); }
+
+  .link-text {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .link-text .label {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .link-text .desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .link-arrow {
+    font-size: 18px;
+    color: var(--text-muted);
+    transition: transform 0.3s, color 0.3s;
+    position: relative;
+    z-index: 1;
+  }
+
+  .link-card:hover .link-arrow {
+    color: var(--primary);
+    transform: translateX(-4px);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    animation: fadeUp 0.6s ease-out 0.6s both;
+  }
+
+  .footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .footer .brand {
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  /* Grid decoration */
+  .grid-dots {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 400px) {
+    .page { padding: 36px 16px 48px; }
+    .title h1 { font-size: 30px; }
+    .link-card { padding: 14px 16px; }
+    .link-icon { width: 42px; height: 42px; font-size: 20px; }
+  }
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="grid-dots"></div>
 
-<div class="logo">T</div>
+<div class="page">
 
-<h1>Tap Tech</h1>
-<p>اطلاعك اليومي على التقنية</p>
+  <div class="logo-wrap">
+    <div class="logo"><span>T</span></div>
+  </div>
 
-<a class="btn" href="https://routinehub.co" target="_blank">
-📸 أفضل اختصارات الآيفون
+  <div class="title">
+    <h1>Tap Tech</h1>
+    <p>أفضل اختصارات وأدوات يومية 🔥</p>
+  </div>
+
+  <div class="links">
+
+```
+<a class="link-card" href="https://routinehub.co/" target="_blank" rel="noopener noreferrer">
+  <div class="link-icon">📲</div>
+  <div class="link-text">
+    <div class="label">اختصارات الآيفون</div>
+    <div class="desc">تصفح جميع الاختصارات المتاحة</div>
+  </div>
+  <div class="link-arrow">‹</div>
 </a>
 
-<a class="btn" href="https://routinehub.co/gallery/" target="_blank">
-💳 اختصارات جاهزة
+<a class="link-card" href="https://routinehub.co/shortcut/10435/" target="_blank" rel="noopener noreferrer">
+  <div class="link-icon">📸</div>
+  <div class="link-text">
+    <div class="label">اختصار تصوير احترافي</div>
+    <div class="desc">حسّن صورك بضغطة واحدة</div>
+  </div>
+  <div class="link-arrow">‹</div>
 </a>
 
-<a class="btn" href="https://routinehub.co/latest/" target="_blank">
-🤖 أدوات AI
+<a class="link-card" href="https://routinehub.co/shortcut/6622/" target="_blank" rel="noopener noreferrer">
+  <div class="link-icon">💳</div>
+  <div class="link-text">
+    <div class="label">اختصار Wallet</div>
+    <div class="desc">أداة رهيبة لمحفظتك الرقمية</div>
+  </div>
+  <div class="link-arrow">‹</div>
 </a>
 
-<a class="btn" href="https://www.tiktok.com/@amm_5595" target="_blank">
-🎥 تابعني على تيك توك
+<a class="link-card" href="https://chat.openai.com" target="_blank" rel="noopener noreferrer">
+  <div class="link-icon">🤖</div>
+  <div class="link-text">
+    <div class="label">ذكاء اصطناعي</div>
+    <div class="desc">ChatGPT — محادثة ذكية</div>
+  </div>
+  <div class="link-arrow">‹</div>
 </a>
+
+<a class="link-card" href="https://www.remove.bg" target="_blank" rel="noopener noreferrer">
+  <div class="link-icon">🖼️</div>
+  <div class="link-text">
+    <div class="label">إزالة خلفية الصور</div>
+    <div class="desc">احذف الخلفية بثواني</div>
+  </div>
+  <div class="link-arrow">‹</div>
+</a>
+
+<a class="link-card" href="https://www.tiktok.com/@amm_5595" target="_blank" rel="noopener noreferrer">
+  <div class="link-icon">🎥</div>
+  <div class="link-text">
+    <div class="label">حسابي تيك توك</div>
+    <div class="desc">تابعني للمزيد من المحتوى</div>
+  </div>
+  <div class="link-arrow">‹</div>
+</a>
+```
+
+  </div>
+
+  <div class="footer">
+    <p>صنع بـ ❤️ بواسطة <span class="brand">Tap Tech</span></p>
+  </div>
 
 </div>
 
