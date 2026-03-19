@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tap Tech - مكتبة البرومبتات الاحترافية للذكاء الاصطناعي">
+<title>Tap Tech | Prompts</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #06080f;
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.08);
+    --border: rgba(255,255,255,0.06);
+    --text: #f0f0f5;
+    --text-muted: rgba(255,255,255,0.45);
+    --accent: #00d4ff;
+    --accent-glow: rgba(0,212,255,0.15);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Ambient background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(0,212,255,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 90%, rgba(139,92,246,0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Page wrapper */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 32px;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--accent); }
+  .back-link svg { width: 16px; height: 16px; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.7s ease-out;
+  }
+
+  .header-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--accent-glow), rgba(139,92,246,0.1));
+    border: 1.5px solid rgba(0,212,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .header h1 {
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 40%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Category Grid */
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease-out both;
+  }
+
+  .cat-card:nth-child(1) { animation-delay: 0.1s; }
+  .cat-card:nth-child(2) { animation-delay: 0.15s; }
+  .cat-card:nth-child(3) { animation-delay: 0.2s; }
+  .cat-card:nth-child(4) { animation-delay: 0.25s; }
+  .cat-card:nth-child(5) { animation-delay: 0.3s; }
+  .cat-card:nth-child(6) { animation-delay: 0.35s; }
+  .cat-card:nth-child(7) { animation-delay: 0.4s; }
+  .cat-card:nth-child(8) { animation-delay: 0.45s; }
+
+  .cat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 18px;
+  }
+
+  .cat-card:hover, .cat-card.active {
+    background: var(--surface-hover);
+    border-color: rgba(0,212,255,0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+
+  .cat-card.active {
+    border-color: rgba(0,212,255,0.3);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .cat-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .cat-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .cat-count {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Prompts Section */
+  .prompts-section {
+    display: none;
+  }
+
+  .prompts-section.visible {
+    display: block;
+    animation: fadeUp 0.4s ease-out;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .close-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s;
+  }
+  .close-btn:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+  }
+
+  .prompt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .prompt-card:hover {
+    border-color: rgba(255,255,255,0.1);
+    background: var(--surface-hover);
+  }
+
+  .prompt-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .prompt-label .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--accent-glow);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .prompt-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.8);
+    direction: ltr;
+    text-align: left;
+    font-family: 'Courier New', monospace;
+    background: rgba(0,0,0,0.3);
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.04);
+    word-break: break-word;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .prompt-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2;
+  }
+  .copy-btn:hover {
+    background: rgba(0,212,255,0.2);
+  }
+  .copy-btn.copied {
+    background: rgba(34,197,94,0.15);
+    border-color: rgba(34,197,94,0.3);
+    color: #22c55e;
+  }
+
+  /* Tip box */
+  .tip-box {
+    background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(139,92,246,0.04));
+    border: 1px solid rgba(0,212,255,0.1);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+  }
+  .tip-box strong {
+    color: var(--accent);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .footer p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer .brand { color: var(--accent); font-weight: 700; }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity:0; transform:translateY(-16px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(14px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .categories { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .cat-card { padding: 16px 12px; }
+    .cat-icon { font-size: 30px; }
+    .page { padding: 28px 14px 48px; }
+    .header h1 { font-size: 26px; }
+  }
+</style>
+
+</head>
+
+<body>
+<div class="grid-bg"></div>
+
+<div class="page">
+
+  <a class="back-link" href="./index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    الرجوع للرئيسية
+  </a>
+
+  <div class="header">
+    <div class="header-icon">✨</div>
+    <h1>مكتبة البرومبتات</h1>
+    <p>أقوى البرومبتات الاحترافية لتوليد الصور والفيديو والتصاميم بالذكاء الاصطناعي — جاهزة للنسخ والاستخدام</p>
+  </div>
+
+  <!-- Categories Grid -->
+
+  <div class="categories" id="catGrid">
+
+```
+<div class="cat-card" onclick="showCategory('eid')">
+  <span class="cat-icon">🌙</span>
+  <div class="cat-name">برومبت العيد</div>
+  <div class="cat-count">6 برومبتات</div>
+</div>
+
+<div class="cat-card" onclick="showCategory('engineer')">
+  <span class="cat-icon">🏗️</span>
+  <div class="cat-name">للمهندسين</div>
+  <div class="cat-count">6 برومبتات</div>
+</div>
+
+<div class="cat-card" onclick="showCategory('photo')">
+  <span class="cat-icon">📸</span>
+  <div class="cat-name">للمصورين</div>
+  <div class="cat-count">6 برومبتات</div>
+</div>
+
+<div class="cat-card" onclick="showCategory('sticker')">
+  <span class="cat-icon">🎨</span>
+  <div class="cat-name">استيكرات</div>
+  <div class="cat-count">6 برومبتات</div>
+</div>
+
+<div class="cat-card" onclick="showCategory('film')">
+  <span class="cat-icon">🎬</span>
+  <div class="cat-name">صناعة الأفلام</div>
+  <div class="cat-count">6 برومبتات</div>
+</div>
+
+<div class="cat-card" onclick="showCategory('logo')">
+  <span class="cat-icon">💎</span>
+  <div class="cat-name">تصميم شعارات</div>
+  <div class="cat-count">5 برومبتات</div>
+</div>
+
+<div class="cat-card" onclick="showCategory('product')">
+  <span class="cat-icon">🛍️</span>
+  <div class="cat-name">تصوير منتجات</div>
+  <div class="cat-count">5 برومبتات</div>
+</div>
+
+<div class="cat-card" onclick="showCategory('avatar')">
+  <span class="cat-icon">🧑‍🎤</span>
+  <div class="cat-name">صور شخصية</div>
+  <div class="cat-count">5 برومبتات</div>
+</div>
+```
+
+  </div>
+
+  <!-- Prompt Sections -->
+
+  <div class="prompts-section" id="sec-eid">
+    <div class="section-header">
+      <span class="section-title">🌙 برومبتات العيد</span>
+      <button class="close-btn" onclick="hideAll()">✕</button>
+    </div>
+    <div class="tip-box">
+      <strong>نصيحة:</strong> استخدم هذه البرومبتات مع ChatGPT أو Midjourney أو أي مولد صور بالذكاء الاصطناعي. غيّر التفاصيل حسب حاجتك!
+    </div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">بطاقة معايدة فاخرة</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Elegant Eid Mubarak greeting card, golden crescent moon with intricate Islamic geometric patterns, deep royal purple background, scattered gold stars, ornate Arabic calligraphy text “Eid Mubarak”, luxury feel, soft bokeh lights, photorealistic, 8k quality
+</div>
+<div class="prompt-desc">بطاقة معايدة فخمة بالهلال الذهبي والزخارف الإسلامية</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">مسجد بأجواء العيد</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+A stunning mosque at sunset during Eid celebrations, golden dome reflecting warm light, families in traditional clothing gathering outside, string lights and lanterns decorating the courtyard, warm golden hour lighting, cinematic composition, ultra-detailed, 4k
+</div>
+<div class="prompt-desc">مسجد مذهل وقت الغروب مع أجواء احتفالية بالعيد</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">فانوس رمضان ثلاثي الأبعاد</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+3D render of a beautiful ornate Ramadan lantern (fanoos), glowing warmly from inside, intricate metalwork with geometric Islamic patterns, placed on a marble surface with rose petals scattered around, dark moody background with soft golden bokeh, hyper-realistic, studio lighting
+</div>
+<div class="prompt-desc">فانوس ثلاثي الأبعاد مع إضاءة دافئة وزخارف إسلامية</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">مائدة إفطار تقليدية</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Aerial view of a traditional Arab Eid breakfast table, beautifully arranged dates, Arabic coffee (gahwa), maamoul cookies, kunafa dessert, ornate golden plates, embroidered tablecloth, warm natural morning light streaming in, food photography style, ultra-detailed, 8k
+</div>
+<div class="prompt-desc">تصوير احترافي لمائدة عيد تقليدية من الأعلى</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">تهنئة سوشيال ميديا</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Modern minimalist Eid social media post design, clean white background, elegant gold geometric frame, subtle crescent moon motif, text area in center, luxury brand aesthetic, Instagram-ready square format (1:1), soft shadows, premium feel
+</div>
+<div class="prompt-desc">تصميم بوست عيد مينيمال جاهز للسوشيال ميديا</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">خلفية عيد للهاتف</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Phone wallpaper, vertical 9:16, night sky with glowing crescent moon, floating golden lanterns, Islamic architecture silhouette at bottom, deep navy blue and gold color scheme, mystical atmosphere, tiny stars scattered, dreamy soft glow, ultra HD
+</div>
+<div class="prompt-desc">خلفية هاتف بأجواء ليلية رمضانية وعيدية ساحرة</div>
+</div>
+
+  </div>
+
+  <!-- Engineers -->
+
+  <div class="prompts-section" id="sec-engineer">
+    <div class="section-header">
+      <span class="section-title">🏗️ برومبتات المهندسين</span>
+      <button class="close-btn" onclick="hideAll()">✕</button>
+    </div>
+    <div class="tip-box">
+      <strong>نصيحة:</strong> هذه البرومبتات تعمل بشكل ممتاز مع Midjourney و ChatGPT Image Generation لتوليد تصاميم معمارية وهندسية مذهلة.
+    </div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">فيلا عصرية فاخرة</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Photorealistic architectural render of a luxury modern villa, floor-to-ceiling glass facade, cantilevered upper floor, infinity pool reflecting the sunset, lush landscaping with palm trees, warm golden hour lighting, shot with Sony A7R IV, wide-angle lens, 8k ultra-detailed
+</div>
+<div class="prompt-desc">رندر معماري لفيلا حديثة بواجهة زجاجية ومسبح إنفينيتي</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">تصميم داخلي بيوفيليك</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Interior design render of a biophilic office space, living green walls, natural wood finishes, large skylights with natural light flooding in, modern minimalist furniture, indoor trees and hanging planters, warm earth tones, architectural photography style, soft ambient lighting, 4k
+</div>
+<div class="prompt-desc">مكتب بتصميم بيوفيليك يدمج الطبيعة مع العمارة الحديثة</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">برج مستقبلي مستدام</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Futuristic sustainable skyscraper with vertical gardens on every floor, glass sky-bridges connecting twin towers, solar panel integrated facade, rooftop wind turbines, evening city lights illuminating the structure, cinematic drone aerial view, hyper-detailed photorealistic render, 8k
+</div>
+<div class="prompt-desc">برج مستقبلي صديق للبيئة مع حدائق عمودية وطاقة متجددة</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">كابينة جبلية خشبية</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Cozy mountain cabin built with cross-laminated timber and rough stone walls, surrounded by pine forest, large panoramic glass windows showing sunrise, morning mist covering the trees, warm interior glow visible, architectural visualization, photorealistic, natural lighting
+</div>
+<div class="prompt-desc">كابينة جبلية دافئة بمواد طبيعية وإطلالة ساحرة</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">مخطط أرضي ثلاثي الأبعاد</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Isometric 3D floor plan of a modern 3-bedroom apartment, furniture placed realistically, warm wood flooring, open-plan kitchen and living area, labeled rooms, clean white walls, soft shadows, architectural diagram style, professional presentation quality, top-down perspective
+</div>
+<div class="prompt-desc">مخطط طابقي ثلاثي الأبعاد لشقة حديثة بثلاث غرف</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">متحف بروتالي مستقبلي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Futuristic brutalist museum with massive raw concrete walls, bold geometric forms, dramatic cantilevers, dusk lighting creating deep shadows, warm interior glow through narrow slit windows, reflecting pool in foreground, cinematic composition, shot on ARRI ALEXA, photorealistic
+</div>
+<div class="prompt-desc">متحف بطراز بروتالي جريء مع إضاءة درامية وقت الغسق</div>
+</div>
+
+  </div>
+
+  <!-- Photography -->
+
+  <div class="prompts-section" id="sec-photo">
+    <div class="section-header">
+      <span class="section-title">📸 برومبتات المصورين</span>
+      <button class="close-btn" onclick="hideAll()">✕</button>
+    </div>
+    <div class="tip-box">
+      <strong>نصيحة:</strong> أضف تفاصيل الكاميرا والعدسة والإضاءة للحصول على نتائج واقعية أكثر. كلما كنت دقيقاً كانت النتيجة أفضل!
+    </div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">بورتريه سينمائي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Cinematic portrait of a man in a dimly lit room, dramatic Rembrandt lighting from a single window, shallow depth of field, warm golden tones, dust particles floating in light beam, shot on Canon EOS R5 with 85mm f/1.2 lens, film grain texture, moody atmosphere
+</div>
+<div class="prompt-desc">بورتريه سينمائي بإضاءة رمبرانت الدراماتيكية</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">تصوير طبيعة خلابة</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Hyperrealistic astrophotography of the Milky Way arching over a crystal-clear mountain lake, perfect reflection in still water, silhouette of pine trees on the shore, long exposure, light painting on foreground rocks, shot on Nikon Z9 with 14mm f/1.8, 30-second exposure, 8k
+</div>
+<div class="prompt-desc">تصوير فلكي مذهل للمجرة فوق بحيرة جبلية</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">تصوير شارع حضري</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Street photography, candid moment of an elderly man reading newspaper at a vintage cafe in Tokyo, steam rising from coffee cup, rain-soaked window reflections, natural ambient light, Fuji X-T5 with 23mm f/1.4, authentic emotions, documentary style, warm muted tones
+</div>
+<div class="prompt-desc">تصوير شارع بأسلوب وثائقي في أجواء يابانية</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">ماكرو احترافي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Extreme macro photography of morning dew drops on a spider web, each droplet reflecting miniature landscapes, bokeh garden background, golden sunrise backlighting creating rainbow refractions, shot on Canon MP-E 65mm macro lens, focus stacking, ultra-sharp details, 8k
+</div>
+<div class="prompt-desc">تصوير ماكرو لقطرات الندى على شبكة عنكبوت بتفاصيل خيالية</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">تصوير أزياء إبداعي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+High-fashion editorial photograph, model wearing flowing silk dress in desert sand dunes, golden hour sun creating long dramatic shadows, wind billowing fabric, shot from low angle, Hasselblad medium format camera, rich warm tones, Vogue magazine quality, cinematic color grading
+</div>
+<div class="prompt-desc">تصوير أزياء في صحراء ذهبية بأسلوب مجلات الموضة</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">تصوير طعام احترافي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Professional food photography of a freshly baked croissant on a rustic wooden board, steam rising, butter melting, scattered flour dust, warm bakery morning light from side window, dark moody background, shallow depth of field, Canon 100mm macro lens, appetizing styling
+</div>
+<div class="prompt-desc">تصوير طعام احترافي لكرواسون طازج بإضاءة دافئة</div>
+</div>
+
+  </div>
+
+  <!-- Stickers -->
+
+  <div class="prompts-section" id="sec-sticker">
+    <div class="section-header">
+      <span class="section-title">🎨 برومبتات الاستيكرات</span>
+      <button class="close-btn" onclick="hideAll()">✕</button>
+    </div>
+    <div class="tip-box">
+      <strong>نصيحة:</strong> استخدم ChatGPT مع صورتك الشخصية لتوليد استيكرات مخصصة! ارفع صورتك مع البرومبت وبيسوي لك مجموعة استيكرات.
+    </div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">استيكر شيبي شخصي <span class="badge">الأكثر شيوعاً</span></div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Turn me into a chibi sticker set. Create 9 stickers in a 3x3 grid on transparent background. Each sticker shows a different expression: happy, laughing, crying, angry, surprised, sleeping, love eyes, thumbs up, thinking. Keep consistent cute anime style with big expressive eyes, bold outlines, white border around each sticker.
+</div>
+<div class="prompt-desc">مجموعة 9 استيكرات شيبي بتعبيرات مختلفة من صورتك</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">استيكر ثلاثي الأبعاد</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Create a set of 6 colorful 3D cartoon stickers on a transparent background. Characters: cute round blob creatures with tiny arms and legs. Expressions: waving hello, heart eyes, laughing with tears, mind blown, flexing muscles, peace sign. Glossy plastic 3D render, vibrant colors, thick white outline, sticker-ready.
+</div>
+<div class="prompt-desc">استيكرات كيوت ثلاثية الأبعاد بألوان زاهية</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">استيكر واتساب عربي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Create 9 WhatsApp stickers in a 3x3 grid, cute cartoon cat character wearing a traditional white thobe and shemagh. Expressions with Arabic text bubbles: “الله يعطيك العافية”, “ههههه”, “لا تزعلني”, “يلا”, “ماشاء الله”, “حبيبي”, “شكراً”, “نوم”, “يالله بسم الله”. Kawaii style, white die-cut border, transparent background.
+</div>
+<div class="prompt-desc">استيكرات واتساب عربية بشخصية قطة كيوت بالشماغ</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">استيكر إيموجي واقعي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Turn this photo into a set of 6 realistic emoji-style stickers. Keep my facial features recognizable. Expressions: big smile, shocked face, eye roll, blowing a kiss, saluting, facepalm. Slightly exaggerated proportions (bigger head, expressive eyes), clean cutout, white sticker border, high resolution PNG.
+</div>
+<div class="prompt-desc">حوّل صورتك لإيموجي واقعي مع 6 تعبيرات مختلفة</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">استيكرات ستوديو جيبلي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Create 6 Studio Ghibli-inspired stickers of me. Soft watercolor palette, whimsical art style, delicate linework. Scenes: sitting with a magical forest spirit, flying on a broomstick, reading under a giant mushroom, feeding a friendly dragon, walking in a flower field, sleeping on a cloud. White die-cut sticker border.
+</div>
+<div class="prompt-desc">استيكرات بأسلوب أفلام ستوديو جيبلي الساحر</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">استيكرات مهنية</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Create 9 professional workplace stickers in a 3x3 grid. Cute chibi office worker character. Actions: typing fast on laptop, drinking coffee desperately, in a Zoom meeting looking bored, celebrating with confetti, carrying stack of papers, sleeping at desk, giving presentation, high-five, deadline panic. Modern flat illustration, bold outlines, transparent background.
+</div>
+<div class="prompt-desc">استيكرات مكتبية مضحكة للشات مع الزملاء</div>
+</div>
+
+  </div>
+
+  <!-- Filmmaking -->
+
+  <div class="prompts-section" id="sec-film">
+    <div class="section-header">
+      <span class="section-title">🎬 برومبتات صناعة الأفلام</span>
+      <button class="close-btn" onclick="hideAll()">✕</button>
+    </div>
+    <div class="tip-box">
+      <strong>نصيحة:</strong> استخدم هذه البرومبتات مع أدوات مثل Runway، Kling، Sora أو Pika لتوليد فيديو سينمائي. استخدم الصور المولدة كإطار أول ثم حوّلها لفيديو.
+    </div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">مشهد سينمائي درامي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Cinematic still frame, a lone figure standing at the edge of a cliff overlooking a vast stormy ocean, dramatic volumetric lighting breaking through dark clouds, shot on ARRI ALEXA 35 with Panavision anamorphic lens, 2.39:1 aspect ratio, film grain, teal and orange color grading, Christopher Nolan visual style
+</div>
+<div class="prompt-desc">مشهد سينمائي درامي بأسلوب أفلام كريستوفر نولان</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">مشهد أكشن متتبع</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Tracking shot following a hooded figure running through a neon-lit rain-soaked alley at night, puddles reflecting pink and blue neon signs, steam rising from manholes, handheld camera shake for urgency, cyberpunk aesthetic, cinematic motion blur, Blade Runner atmosphere, anamorphic lens flares
+</div>
+<div class="prompt-desc">مشهد مطاردة في زقاق مضاء بالنيون بأسلوب سايبربنك</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">فيديو منتج تجاري</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Product commercial shot: crystal perfume bottle on a black reflective surface, spotlight slowly gliding across the bottle creating prismatic light refractions, slow-motion golden liquid swirling inside, crane shot descending from darkness to product level, high-contrast dramatic lighting, soft fog in background, ultra-luxury aesthetic, 4K
+</div>
+<div class="prompt-desc">إعلان منتج فاخر بإضاءة درامية وحركة كاميرا سينمائية</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">مشهد خيال علمي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Epic sci-fi establishing shot: massive spacecraft entering the atmosphere of an alien planet with twin suns, volumetric clouds parting around the ship, bioluminescent landscape below, slow dolly zoom revealing the scale, orchestral cinematic mood, IMAX quality, Ridley Scott visual style, 8K ultra-detailed
+</div>
+<div class="prompt-desc">مشهد خيال علمي ملحمي بأسلوب أفلام ريدلي سكوت</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">مونتاج وثائقي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Documentary-style interview setup, subject sitting in a warmly lit workshop surrounded by handmade pottery, shallow depth of field with background softly blurred, natural window light mixed with practical lamps, 16mm film look with gentle grain, intimate close-up, authentic and emotional, National Geographic quality
+</div>
+<div class="prompt-desc">إعداد مقابلة وثائقية بإحساس سينمائي حميمي</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">مشهد درون جوي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Sweeping aerial drone shot starting from ground level, rapidly ascending to reveal an ancient desert city at golden hour, long shadows stretching across sand dunes, caravans of camels below, camera smoothly orbiting 180 degrees, warm cinematic color grading, epic scale, DJI Inspire 3 quality, 6K
+</div>
+<div class="prompt-desc">تصوير جوي ملحمي لمدينة صحراوية قديمة وقت الغروب</div>
+</div>
+
+  </div>
+
+  <!-- Logos -->
+
+  <div class="prompts-section" id="sec-logo">
+    <div class="section-header">
+      <span class="section-title">💎 برومبتات تصميم الشعارات</span>
+      <button class="close-btn" onclick="hideAll()">✕</button>
+    </div>
+    <div class="tip-box">
+      <strong>نصيحة:</strong> غيّر اسم البراند والألوان حسب مشروعك. النتائج الأفضل تكون مع Midjourney أو DALL-E 3 في ChatGPT.
+    </div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">شعار مينيمال احترافي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Minimalist logo design for a tech startup called “Nova”, clean geometric lettermark, single continuous line forming the letter N, gradient from electric blue to cyan, white background, flat vector style, scalable, modern and professional, suitable for app icon and business card
+</div>
+<div class="prompt-desc">شعار تقني بسيط بأسلوب الحرف الواحد المتصل</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">شعار مقهى عربي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Elegant logo for an Arabic coffee shop called “دلة”, stylized traditional Arabic coffee pot (dallah) icon, incorporating subtle Islamic geometric patterns, warm gold and dark brown color palette, premium vintage aesthetic, clean vector illustration, works on both light and dark backgrounds
+</div>
+<div class="prompt-desc">شعار مقهى عربي بأيقونة الدلة بأسلوب فاخر</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">شعار رياضي جريء</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Bold esports team logo, fierce eagle head in profile view, sharp angular design, metallic silver and crimson red color scheme, aggressive stance, shield shape container, suitable for jersey print and social media avatar, vector illustration, dark background, gaming aesthetic
+</div>
+<div class="prompt-desc">شعار فريق رياضي/إيسبورتس بنسر جريء</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">شعار ثلاثي الأبعاد</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+3D glossy logo mockup, letter “T” extruded in chrome metallic finish, sitting on a dark reflective surface, dramatic studio lighting with blue and purple rim lights, shallow depth of field, photorealistic product render, premium branding presentation
+</div>
+<div class="prompt-desc">عرض شعار ثلاثي الأبعاد بتشطيب معدني كروم</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">شعار بأسلوب ياباني</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Japanese-inspired minimalist logo for a wellness brand, zen circle (enso) brushstroke combined with a lotus flower, black ink on white background, wabi-sabi imperfection, elegant and serene, single color design, works as rubber stamp, high contrast, timeless aesthetic
+</div>
+<div class="prompt-desc">شعار بأسلوب ياباني زِن لعلامة تجارية هادئة</div>
+</div>
+
+  </div>
+
+  <!-- Product Photography -->
+
+  <div class="prompts-section" id="sec-product">
+    <div class="section-header">
+      <span class="section-title">🛍️ برومبتات تصوير المنتجات</span>
+      <button class="close-btn" onclick="hideAll()">✕</button>
+    </div>
+    <div class="tip-box">
+      <strong>نصيحة:</strong> غيّر نوع المنتج في البرومبت حسب منتجك. هذه البرومبتات مثالية للمتاجر الإلكترونية والإعلانات.
+    </div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">تصوير عطر فاخر</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Luxury perfume bottle product shot, amber glass on polished black marble, water droplets on surface, single dramatic spotlight from above, golden liquid visible through glass, dark moody background with soft fog, reflections on marble, premium advertising quality, shot on Phase One IQ4, 8k
+</div>
+<div class="prompt-desc">تصوير عطر فاخر بإضاءة درامية على رخام أسود</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">سماعات تقنية</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Product photography of wireless earbuds floating in mid-air, matte black finish, soft directional studio lighting, clean white background, subtle shadow beneath, ultra-sharp focus on texture details, one earbud showing the interior, modern tech aesthetic, Amazon product listing quality, 4K
+</div>
+<div class="prompt-desc">تصوير سماعات لاسلكية بأسلوب متاجر إلكترونية احترافي</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">منتج غذائي طبيعي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Product flat lay photography of organic honey jar surrounded by fresh honeycomb, scattered lavender flowers, wooden honey dipper dripping golden honey, rustic linen cloth, warm morning sunlight from left, overhead angle, natural earth tones, artisanal brand aesthetic, food styling perfection
+</div>
+<div class="prompt-desc">تصوير فلات لاي لمنتج عسل طبيعي بأسلوب أرتيزانال</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">ساعة ذكية</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Smartwatch rotating slowly in mid-air, holographic UI projections appearing around the display, sleek titanium case, smooth orbit camera movement, cool white studio lighting, clean futuristic aesthetic, hyper-detailed textures, tech product commercial quality, dark reflective surface below, 8K
+</div>
+<div class="prompt-desc">تصوير ساعة ذكية بأسلوب مستقبلي مع واجهة هولوغرام</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">حذاء رياضي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Dynamic product shot of a running shoe mid-air with sole facing camera, colorful paint splash explosion behind it, vibrant energy, studio lighting with colored gels (orange and teal), motion frozen in time, high-speed photography style, clean dark background, Nike campaign quality, 4K
+</div>
+<div class="prompt-desc">تصوير حذاء رياضي ديناميكي مع انفجار ألوان</div>
+</div>
+
+  </div>
+
+  <!-- Avatar / Personal -->
+
+  <div class="prompts-section" id="sec-avatar">
+    <div class="section-header">
+      <span class="section-title">🧑‍🎤 برومبتات الصور الشخصية</span>
+      <button class="close-btn" onclick="hideAll()">✕</button>
+    </div>
+    <div class="tip-box">
+      <strong>نصيحة:</strong> ارفع صورتك الشخصية مع البرومبت في ChatGPT أو أداة AI المفضلة لديك وسيحوّلها لأسلوب فني مذهل!
+    </div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">بورتريه أنمي <span class="badge">ترند</span></div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Transform this photo into a high-quality anime portrait, Studio Ghibli inspired art style, soft watercolor background with cherry blossoms, gentle wind blowing hair, warm golden hour lighting, dreamy atmosphere, detailed eyes with light reflections, vibrant but soft color palette, manga illustration quality
+</div>
+<div class="prompt-desc">حوّل صورتك لبورتريه أنمي بأسلوب ستوديو جيبلي</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">صورة بروفايل احترافية</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Transform this photo into a professional LinkedIn headshot. Clean studio background in soft gray gradient, professional softbox lighting, sharp focus on face, wearing a crisp navy blue blazer, confident natural smile, corporate but approachable, color corrected, retouched skin with natural texture, professional photographer quality
+</div>
+<div class="prompt-desc">حوّل صورتك لهيدشوت احترافي مناسب للينكدإن</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">أسلوب سايبربنك</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Transform this image into a cyberpunk aesthetic, neon lights reflecting on face, dark futuristic city backdrop with glowing holographic signs, misty rain, futuristic techwear jacket, moody shadows and neon light reflections, pink and blue color grading, Blade Runner 2049 atmosphere, cinematic portrait
+</div>
+<div class="prompt-desc">حوّل صورتك لأسلوب سايبربنك مع نيون وأمطار</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">بورتريه زيتي كلاسيكي</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Transform this photo into a classical Renaissance oil painting portrait, rich dark background, dramatic chiaroscuro lighting, wearing elegant period clothing with gold embroidery, ornate gilded frame visible, thick oil paint brushstrokes visible, museum quality, Rembrandt style, warm earth tones
+</div>
+<div class="prompt-desc">حوّل صورتك للوحة زيتية كلاسيكية بأسلوب رمبرانت</div>
+</div>
+
+```
+<div class="prompt-card">
+  <div class="prompt-label">صورة بطل خارق</div>
+  <div class="prompt-text">
+    <button class="copy-btn" onclick="copyPrompt(this)">نسخ</button>
+```
+
+Transform this photo into a superhero movie poster style, wearing a sleek armored suit with glowing energy lines, dramatic cape flowing in wind, epic city skyline background at sunset, volumetric lighting, power aura glowing around hands, heroic low-angle shot, Marvel cinematic quality, highly detailed, 8K
+</div>
+<div class="prompt-desc">حوّل صورتك لبوستر فيلم بطل خارق بأسلوب مارفل</div>
+</div>
+
+  </div>
+
+  <div class="footer">
+    <p>صنع بـ ❤️ بواسطة <span class="brand">Tap Tech</span></p>
+  </div>
+
+</div>
+
+<script>
+function showCategory(id) {
+  // Hide all
+  document.querySelectorAll('.prompts-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+
+  // Show selected
+  const section = document.getElementById('sec-' + id);
+  if (section) {
+    section.classList.add('visible');
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Mark active card
+  const cards = document.querySelectorAll('.cat-card');
+  const categories = ['eid','engineer','photo','sticker','film','logo','product','avatar'];
+  const idx = categories.indexOf(id);
+  if (idx >= 0 && cards[idx]) cards[idx].classList.add('active');
+}
+
+function hideAll() {
+  document.querySelectorAll('.prompts-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('catGrid').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyPrompt(btn) {
+  const promptDiv = btn.parentElement;
+  // Get text without the button text
+  const text = promptDiv.textContent.replace('نسخ', '').replace('تم!', '').trim();
+
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'تم!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'نسخ';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'تم!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'نسخ';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
